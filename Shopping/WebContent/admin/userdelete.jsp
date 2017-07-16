@@ -2,7 +2,7 @@
     pageEncoding="GB18030"%>
 
 <%@ page import="com.bjsxt.shopping.*" %>
-
+<%@ include file="_SessionCheck.jsp" %>
 <%
 //TODO you should validate the id
 int id = Integer.parseInt(request.getParameter("id"));
