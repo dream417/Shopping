@@ -19,7 +19,7 @@ User.deleteUser(id);
 É¾³ý³É¹¦£¡
 <script language="javascript">
 	<!--
-	parent.main.reload();
+	parent.main.location.reload();
 	-->
 </script>
 </body>
