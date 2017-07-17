@@ -19,7 +19,7 @@ if(action != null && action.equals("login")) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-<title>登录</title>
+<title>后台登录</title>
 </head>
 <body>
 <form action="Login.jsp" method="post">

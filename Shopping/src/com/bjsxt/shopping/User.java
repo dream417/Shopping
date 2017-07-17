@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
 import com.bjsxt.shopping.util.DB;
 
 public class User {
@@ -118,6 +120,59 @@ public class User {
 			e.printStackTrace();
 		}finally{
 			DB.closeStmt(stmt);
+			DB.closeConn(conn);
+		}
+	}
+	
+	public static User valite(String userName,String password) throws UserNotFoundException, PasswordNotCorrectException{
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		User u = null;
+		try {
+			conn = DB.getConn();
+			stmt = DB.getStmt(conn);
+			rs = stmt.executeQuery("select * from ruser where username='" + userName + "'");
+			if(!rs.next()){
+				throw new UserNotFoundException();
+			}else if(!rs.getString("password").equals(password)){
+				throw new PasswordNotCorrectException();
+			}else{
+				u = new User();
+				u.setId(rs.getInt("id"));
+				u.setUserName(rs.getString("username"));
+				u.setPassword(rs.getString("password"));
+				u.setPhone(rs.getString("phone"));
+				u.setAddr(rs.getString("addr"));
+				u.setRdate(rs.getTimestamp("rdate"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeRs(rs);;
+			DB.closeStmt(stmt);
+			DB.closeConn(conn);
+		}
+		return u;
+	}
+	
+	public void update(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		conn = DB.getConn();
+		String sql = "update ruser set username=?,phone=?,addr=? where id="+this.id;
+		try {
+			pstmt = DB.getPStmt(conn, sql);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, phone);
+			pstmt.setString(3, addr);
+			pstmt.executeUpdate();
+		} catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			DB.closeStmt(pstmt);
 			DB.closeConn(conn);
 		}
 	}
