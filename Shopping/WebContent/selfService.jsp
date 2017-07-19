@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
-
-<%@ page import="com.bjsxt.shopping.*" %>
-<%@ include file="_SessionCheck.jsp" %>
+<%@ page import="com.bjsxt.shopping.User" %>
 <%
-//TODO you should validate the id
-int id = Integer.parseInt(request.getParameter("id"));
-User.deleteUser(id);
-%>
-
+User u = (User)session.getAttribute("user");
+if(u==null){
+	response.sendRedirect("login.jsp");//如果是直接输入的地址，则重定向到登录页面
+    return;
+}
+%>  
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,11 +16,6 @@ User.deleteUser(id);
 <title>Insert title here</title>
 </head>
 <body>
-删除成功！
-<script language="javascript">
-	<!--
-	parent.main.location.reload();
-	-->
-</script>
+    <a href="userModify.jsp">修改个人信息</a>
 </body>
 </html>

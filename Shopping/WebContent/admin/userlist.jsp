@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
 <%@ page import="java.sql.*,com.bjsxt.shopping.*,java.util.*" %>
-
+<%@ include file="_SessionCheck.jsp" %>
 <%
 //get all users
 List<User> users = User.getUsers();

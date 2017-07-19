@@ -215,3 +215,9 @@ a:active {
 	text-decoration: none;
 	font-weight: normal;
 }
+.mny{
+position:relative;float:right;right:30px;
+}
+.mny1{
+position:relative;float:right;right:3px;
+}
