@@ -74,11 +74,11 @@ public class DB {
 		return pstmt;
 	}
 	
-	public static void closePStmt(PreparedStatement pStmt){
+	public static void closePStmt(PreparedStatement pstmt){
 		try {
-			if(pStmt != null){
-				pStmt.close();
-				pStmt = null;
+			if(pstmt != null){
+				pstmt.close();
+				pstmt = null;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -118,5 +118,15 @@ public class DB {
 			e.printStackTrace();
 		}
 		return rs;
+	}
+	
+	public static void executeUpdate(Connection conn,String sql){
+		ResultSet rs = null;
+		try {
+			 conn.createStatement().executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,5 +1,8 @@
 package com.bjsxt.shopping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Category {
 		int id;
 		int pid;
@@ -60,5 +63,15 @@ public class Category {
 			c.setLeaf(true);
 			c.setGrade(1);
 			CategoryDao.save(c);
+		}
+		
+		public static void addChildCategory(int pid, String name, String descr){
+			CategoryDao.addChildCategory(pid, name, descr);
+		}
+		
+		public static List<Category> getCategories(){
+			List<Category> list = new ArrayList<Category>();
+			CategoryDao.getCategory(list, 0);
+			return list;
 		}
 }

@@ -4,12 +4,23 @@
 <%@ include file="_SessionCheck.jsp" %> 
  
  <%
- request.setCharacterEncoding("GB18030");
- String action = request.getParameter("action");
+request.setCharacterEncoding("GB18030");
+ 
+String strPid = request.getParameter("pid");
+int pid = 0;
+if(strPid != null && !strPid.equals("")){
+	pid = Integer.parseInt(strPid);
+}
+String action = request.getParameter("action");		 
  if(action != null&&action.trim().equals("add")){
 	 String name = request.getParameter("name");
 	 String descr = request.getParameter("descr");
 	 
+	 if(pid == 0){
+		 Category.addTopCategory(name, descr);
+	 }else{
+		 Category.addChildCategory(pid,name,descr);
+	 }
 	 Category.addTopCategory(name, descr);
 	 out.println("添加根类别成功");
  }
@@ -25,6 +36,7 @@
 	<center>添加根类别</center>
 	<form action="categoryadd.jsp" method="post">
 		<input type="hidden" name="action" value="add">
+		<input type="hidden" name="pid" value=<%=pid %>> 
 		<table>
 			<tr>
 				<td>类别名称</td>
