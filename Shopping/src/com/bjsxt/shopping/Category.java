@@ -54,6 +54,10 @@ public class Category {
 			CategoryDao.save(c);
 		}
 		
+		public void addChild(Category child){
+			Category.addChildCategory(this.id, child.getName(), child.getDescr());
+		}
+		
 		public static void addTopCategory(String name, String descr){
 			Category c = new Category();
 			c.setId(-1);
@@ -73,5 +77,9 @@ public class Category {
 			List<Category> list = new ArrayList<Category>();
 			CategoryDao.getCategory(list, 0);
 			return list;
+		}
+		
+		public static Category loadCategoryByID(int id){
+			return CategoryDao.loadCategory(id);
 		}
 }

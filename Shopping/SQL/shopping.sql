@@ -58,4 +58,8 @@ create table salesitim
 	orderid int
 );
 
+truncate table category 
+
 #select pid, sum(pcount) sumCount fromo salesitem group by pid order by desc limit 0£¬10
+
+

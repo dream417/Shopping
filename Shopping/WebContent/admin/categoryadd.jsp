@@ -19,9 +19,14 @@ String action = request.getParameter("action");
 	 if(pid == 0){
 		 Category.addTopCategory(name, descr);
 	 }else{
-		 Category.addChildCategory(pid,name,descr);
+		 Category parent = Category.loadCategoryByID(pid);
+		 
+		 Category child = new Category();
+		 child.setId(-1);
+		 child.setName(name);
+		 child.setDescr(descr);
+		 parent.addChild(child);
 	 }
-	 Category.addTopCategory(name, descr);
 	 out.println("添加根类别成功");
  }
  %>
