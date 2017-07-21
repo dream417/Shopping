@@ -36,7 +36,8 @@ List<Category> categories = Category.getCategories();
             <td><%=preStr + c.getName() %></td>
             <td><%=c.getGrade() %></td>
             <td>
-                <a href="categoryadd.jsp?pid=<%= c.getId()%>">添加子类别</a>
+                <a href="categoryadd.jsp?pid=<%= c.getId()%>" target="detail">添加子类别</a>
+                <a href="categorydelete.jsp?id=<%=c.getId()%>&pid=<%=c.getPid()%>" target="detail">删除</a>
             </td>
         </tr>
         <%

@@ -36,10 +36,16 @@ String action = request.getParameter("action");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
 <title>Insert title here</title>
+<script language="javascript">
+     function reload(){
+    	 parent.main.location.reload();
+    	 //window.parent.man.document.location.reload();
+     }
+</script>
 </head>
 <body>
 	<center>添加根类别</center>
-	<form action="categoryadd.jsp" method="post">
+	<form action="categoryadd.jsp" method="post" onsubmit="reload()">
 		<input type="hidden" name="action" value="add">
 		<input type="hidden" name="pid" value=<%=pid %>> 
 		<table>

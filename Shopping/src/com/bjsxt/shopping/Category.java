@@ -58,8 +58,9 @@ public class Category {
 			Category.addChildCategory(this.id, child.getName(), child.getDescr());
 		}
 		
-		public void delete(){
-			CategoryDao.delete(this.id,this.pid);
+		public static void deleteCategory(int id,int pid){
+			CategoryDao.deleteCategory(id,pid);
+			CategoryDao.update(pid);
 		}
 		
 		public static void addTopCategory(String name, String descr){

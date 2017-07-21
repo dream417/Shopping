@@ -142,7 +142,7 @@ public class CategoryDao {
 		return c;
 	}
 
-	public static void delete(int id, int pid) {
+	public static void deleteCategory(int id, int pid) {
 		Connection conn = null;
 		ResultSet rs = null;
 		String sql = "select * from category where pid=" + id;
@@ -150,7 +150,7 @@ public class CategoryDao {
 		try {
 			rs = DB.executeQuery(conn, sql);
 			while(rs.next()){
-				delete(rs.getInt("id"),id);
+				deleteCategory(rs.getInt("id"),id);
 			}
 			DB.executeUpdate(conn, "delete from category where id = " + id);
 		} catch (SQLException e) {
@@ -163,6 +163,23 @@ public class CategoryDao {
 	}
 	
 	public static void update(int pid){
-		
+		Connection conn = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from category where id=" + pid;
+		conn = DB.getConn();
+		try {
+			rs = DB.executeQuery(conn, sql);
+			rs.next();
+			int count = rs.getInt(1);
+			if(count<=0){
+				DB.executeUpdate(conn, "update category set isleaf = 0 where id = " + pid);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeRs(rs);;
+			DB.closeConn(conn);;
+		}
 	}
 }
