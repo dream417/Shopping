@@ -78,8 +78,9 @@ public class CategoryDao {
 				conn.setAutoCommit(false);
 			
 				rs = DB.executeQuery(conn, "select * from category where id = " + pid);
-				rs.next();
-				int parentGrade = rs.getInt("grade");
+				int parentGrade = 0;
+				if(rs.next())
+					parentGrade = rs.getInt("grade");
 				
 				String sql = "insert into category values (null,?,?,?,?,?)";
 				//´æ´¢ÐÂµÄcategory
@@ -139,5 +140,29 @@ public class CategoryDao {
 		}
 		
 		return c;
+	}
+
+	public static void delete(int id, int pid) {
+		Connection conn = null;
+		ResultSet rs = null;
+		String sql = "select * from category where pid=" + id;
+		conn = DB.getConn();
+		try {
+			rs = DB.executeQuery(conn, sql);
+			while(rs.next()){
+				delete(rs.getInt("id"),id);
+			}
+			DB.executeUpdate(conn, "delete from category where id = " + id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeRs(rs);;
+			DB.closeConn(conn);;
+		}
+	}
+	
+	public static void update(int pid){
+		
 	}
 }

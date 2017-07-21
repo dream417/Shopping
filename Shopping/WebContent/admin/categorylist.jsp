@@ -30,7 +30,7 @@ List<Category> categories = Category.getCategories();
             	preStr += "----";
             }
         %>
-            <tr>
+        <tr>
             <td><%=c.getId() %></td>
             <td><%=c.getPid() %></td>
             <td><%=preStr + c.getName() %></td>

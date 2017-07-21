@@ -58,6 +58,10 @@ public class Category {
 			Category.addChildCategory(this.id, child.getName(), child.getDescr());
 		}
 		
+		public void delete(){
+			CategoryDao.delete(this.id,this.pid);
+		}
+		
 		public static void addTopCategory(String name, String descr){
 			Category c = new Category();
 			c.setId(-1);
@@ -82,4 +86,5 @@ public class Category {
 		public static Category loadCategoryByID(int id){
 			return CategoryDao.loadCategory(id);
 		}
+		
 }
