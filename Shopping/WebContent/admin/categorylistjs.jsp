@@ -21,26 +21,10 @@ List<Category> categories = Category.getCategories();
 </script>
 </head>
 <body>
-    <script language="javascript">
-	<!--
-	addNode(-1,0,"所有类别","images/top.gif");
-	<%
-	for(Iterator <Category> it = categories.iterator(); it.hasNext();){
-		Category c = it.next();
-	%>
-		addNode(<%= c.getPid()%>,<%= c.getId()%>,"<%=c.getName()%>","images/top.gif");
-	<%
-	}	
-	%>
-	showTV();
-	addListener("click","t");
-	-->
-	</script>
-
 <form name="form" action="categoryadd.jsp" method="post">
 	<input type="hidden" name="action" value="add">
-	<table align="center" border="1">
-	
+	<table align="center" border="1" >	
+	   <tr><td id="show" colspan=2></td></tr>
 		<tr>
 			<td>pid</td>
 			<td>
@@ -62,6 +46,23 @@ List<Category> categories = Category.getCategories();
 		<tr>
 		<td colspan=2 align="center"><input type="submit" value="提交"></td>
 		</tr>
-	</body>
+	</table>
 </form>
+<script language="javascript">
+	<!--
+	addNode(-1,0,"所有类别","images/top.gif");
+	<%
+	for(Iterator <Category> it = categories.iterator(); it.hasNext();){
+	    Category c = it.next();
+	%>
+	    addNode(<%= c.getPid()%>,<%= c.getId()%>,"<%=c.getName()%>","images/top.gif");
+	<%
+	}   
+	%>
+	showTV();
+	addListener("click","t");
+	-->
+</script>		
+</body>
+
 </html>

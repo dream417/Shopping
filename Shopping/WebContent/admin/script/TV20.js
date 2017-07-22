@@ -232,7 +232,8 @@ function nodeitem_show()  {
     str += "'></span>" ;
 	if( this.parent == null )  
   	   for(var i in document.all){
-          if (document.all[i].tagName == "BODY")
+          //if (document.all[i].tagName == "BODY")
+  		 if (document.all[i].id == "show")
           {
 		      document.all[i].insertAdjacentHTML( "AfterBegin" , str ) ;
               break
