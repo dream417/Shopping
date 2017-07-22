@@ -18,6 +18,9 @@ List<Category> categories = Category.getCategories();
 	function t(key,parentkey){
 		document.forms["form"].pid.value = key;
 }
+	function modify(key, parentkey){
+		window.parent.frames["detail"].location.href="categorymodify.jsp?id="+key;
+	}
 </script>
 </head>
 <body>
@@ -61,6 +64,7 @@ List<Category> categories = Category.getCategories();
 	%>
 	showTV();
 	addListener("click","t");
+	addListener("dblclick","modify");
 	-->
 </script>		
 </body>

@@ -182,4 +182,27 @@ public class CategoryDao {
 			DB.closeConn(conn);;
 		}
 	}
+
+	public static void categoryUpdate(Category c) {
+		// TODO Auto-generated method stub
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		int id = c.getId();
+		String sql = "update category set name=?,descr=? where id="+id;
+		
+		try {
+			conn=DB.getConn();
+			pstmt=DB.getPStmt(conn, sql);
+			
+			pstmt.setString(1, c.getName());
+			pstmt.setString(2, c.getDescr());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closePStmt(pstmt);
+			DB.closeConn(conn);
+		}
+	}
 }

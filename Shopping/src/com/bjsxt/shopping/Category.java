@@ -63,6 +63,10 @@ public class Category {
 			CategoryDao.update(pid);
 		}
 		
+		public void modify(){
+			CategoryDao.categoryUpdate(this);
+		}
+		
 		public static void addTopCategory(String name, String descr){
 			Category c = new Category();
 			c.setId(-1);
