@@ -59,6 +59,7 @@ create table salesitim
 );
 
 truncate table category 
+delete from product where categoryid = 21 
 
 #select pid, sum(pcount) sumCount fromo salesitem group by pid order by desc limit 0£¬10
 
