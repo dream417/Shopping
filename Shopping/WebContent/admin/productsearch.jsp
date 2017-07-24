@@ -17,6 +17,12 @@ request.setCharacterEncoding("GB18030");
  
 String action = request.getParameter("action");		 
  if(action != null&&action.trim().equals("complexsearch")){
+	 int pageNo = 1;
+	 String strPageNo = request.getParameter("pageno");
+	 if(strPageNo != null && !strPageNo.trim().equals("")){
+		 pageNo = Integer.parseInt(strPageNo);
+	 }
+	 
 	 String keyWord = request.getParameter("keyword");
 	 double lowNormalPrice = Double.parseDouble(request.getParameter("lownormalprice"));
 	 double highNormalPrice = Double.parseDouble(request.getParameter("highnormalprice"));
@@ -49,11 +55,13 @@ String action = request.getParameter("action");
      }	 
 	 
      System.out.println(keyWord);
-	 List<Product> products = ProductManager.getInstance().findpProducts(idArray, keyWord, 
+     
+     List<Product> products = new ArrayList<Product>();
+	 int pageCount = ProductManager.getInstance().findpProducts(products,idArray, keyWord, 
 			                                    lowNormalPrice, highNormalPrice, 
 			                                    lowMemberPrice, highMemberPrice, 
 			                                    startDate, endDate, 
-			                                    1, 13);
+			                                    pageNo, 3);
 	 %>
 	 <center>搜索结果</center>
 	 <table border="1" align="center">
@@ -88,13 +96,16 @@ String action = request.getParameter("action");
         }
         %>
     </table>
-	 <%
-	 //out.println(products.size());
-	 return;
+    <center>
+                        共<%=pageCount %>页
+        &nbsp;
+        <a href="productsearch.jsp?action=<%=action %>&keyword=<%=keyWord %>&lownormalprice=<%=lowNormalPrice %>&highnormalprice=<%=highNormalPrice %>&lowmemberprice=<%=lowMemberPrice %>&highmemberprice=<%=highMemberPrice %>&startdate=<%=strStartDate %>&enddate=<%=strEndDate %>&categoryid=<%=categoryId %>&pageno=<%=pageNo+1 %>">下一页</a>
+    </center>
+	 <% 
  }
  %>
  
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DT D HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">

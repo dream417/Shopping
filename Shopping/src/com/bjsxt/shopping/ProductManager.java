@@ -53,17 +53,18 @@ public class ProductManager {
 		return dao.getProducts(list, pageNo, pageSize);
 	}
 	
-	public List<Product> findpProducts(int[] categoryId,
-									   String keyWord,
-									   double lowNormalPrice,
-									   double highNormalPrice,
-									   double lowMemberPrice,
-									   double highMemberPrice,
-									   Date startDate,
-									   Date endDate,
-									   int pageNo,
-									   int pageSize){
-		return dao.findpProducts(categoryId, keyWord, lowNormalPrice, highNormalPrice, lowMemberPrice, highMemberPrice, startDate, endDate, pageNo, pageSize);
+	public int findpProducts(List<Product> list,
+			   int[] categoryId,
+			   String keyWord,
+			   double lowNormalPrice,
+			   double highNormalPrice,
+			   double lowMemberPrice,
+			   double highMemberPrice,
+			   Date startDate,
+			   Date endDate,
+			   int pageNo,
+			   int pageSize){
+		return dao.findpProducts(list, categoryId, keyWord, lowNormalPrice, highNormalPrice, lowMemberPrice, highMemberPrice, startDate, endDate, pageNo, pageSize);
 	}
 	
 	public List<Product> findpProducts(String name){

@@ -20,13 +20,20 @@ public class ProductOracleDao implements ProductDao {
 	}
 
 	@Override
-	public List<Product> findpProducts(int[] categoryId,String keyword,
-			double lowNormalPrice, double highNormalPrice,
-			double lowMemberPrice, double highMemberPrice, Date startDate,
-			Date endDate, int pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+	public int findpProducts(List<Product> list,
+			   int[] categoryId,
+			   String keyWord,
+			   double lowNormalPrice,
+			   double highNormalPrice,
+			   double lowMemberPrice,
+			   double highMemberPrice,
+			   Date startDate,
+			   Date endDate,
+			   int pageNo,
+			   int pageSize){
+		return 0;
 	}
+			   
 
 	@Override
 	public boolean deleteProductByCategoryId(int categoryId) {

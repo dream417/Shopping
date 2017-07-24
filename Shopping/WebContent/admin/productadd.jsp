@@ -18,6 +18,12 @@ String action = request.getParameter("action");
 	 double memberPrice = Double.parseDouble(request.getParameter("memberprice"));
 	 int categoryId = Integer.parseInt(request.getParameter("categoryid"));
 	 
+	 Category c = Category.loadCategoryByID(categoryId);
+	 if(!c.isLeaf()){
+		 out.println("非叶子节点下，不能添加商品");
+		 return;
+	 }
+	 
 	 Product p = new Product();
 	 p.setId(-1);
 	 p.setName(name);
@@ -68,7 +74,7 @@ String action = request.getParameter("action");
             </tr>
 			<tr>
 				<td>类别ID</td>
-				<td><input type="text" name="categoryid"></td>
+				<td><input type="text" name="categoryid" value="<%=request.getParameter("categoryid") %>"></td>
 			</tr>
 			<tr>
 				<td colspan=2><input type="submit" value=提交></td>

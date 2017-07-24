@@ -84,20 +84,27 @@ public class ProductMysqlDao implements ProductDao{
 		return list;
 	}
 	
-	public List<Product> findpProducts(int[] categoryId,
-									   String keyWord,
-									   double lowNormalPrice,
-									   double highNormalPrice,
-									   double lowMemberPrice,
-									   double highMemberPrice,
-									   Date startDate,
-									   Date endDate,
-									   int pageNo,
-									   int pageSize){
+	/**
+	 * return pageCount
+	 */
+	public int findpProducts(List<Product> list,
+							   int[] categoryId,
+							   String keyWord,
+							   double lowNormalPrice,
+							   double highNormalPrice,
+							   double lowMemberPrice,
+							   double highMemberPrice,
+							   Date startDate,
+							   Date endDate,
+							   int pageNo,
+							   int pageSize){
 		Connection conn = null;
 		ResultSet rs = null;
+		ResultSet rsCount = null;
 		
-		List<Product> list = new ArrayList<Product>();
+		int pageCount = 0;
+		
+//		List<Product> list = new ArrayList<Product>();
 		
 		try {
 			conn = DB.getConn();
@@ -118,7 +125,7 @@ public class ProductMysqlDao implements ProductDao{
 			}
 			
 			if(keyWord != null && !keyWord.trim().equals("")){
-				sql += " and name like '%" + keyWord + "%' or descr like '%" + keyWord + "%'";
+				sql += " and (name like '%" + keyWord + "%' or descr like '%" + keyWord + "%')";
 			}
 			
 			if(lowNormalPrice >= 0){
@@ -145,8 +152,16 @@ public class ProductMysqlDao implements ProductDao{
 				sql += " and pdate <= '" + new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(endDate) + "'";
 			}
 			
+			String sqlCount = sql.replaceFirst("select \\*", "select count(*)");
+			
 			sql += " limit " + (pageNo-1)*pageSize + "," + pageSize;
-			System.out.println(sql);
+			
+			System.out.println(sqlCount);
+			rsCount = DB.executeQuery(conn, sqlCount);
+			rsCount.next();
+			pageCount = (rsCount.getInt(1) + pageSize -1)/pageSize;
+			
+			
 			//String sql = "select * from product limit " + (pageNo-1)*pageSize + "," + pageSize;
 			
 			rs = DB.executeQuery(conn, sql);
@@ -171,7 +186,7 @@ public class ProductMysqlDao implements ProductDao{
 			DB.closeRs(rs);
 			DB.closeConn(conn);
 		}
-		return list;
+		return pageCount;
 	}
 	
 	public boolean deleteProductByCategoryId(int categoryId){
