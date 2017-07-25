@@ -41,9 +41,18 @@ public class CategoryDao {
 	
 	public static void getCategory(List<Category> list,int id){
 		Connection conn = null;
+		
+		try {
+			conn = DB.getConn();
+			getCategory(conn, list, id);
+		}finally{
+			DB.closeConn(conn);
+		}
+	}
+
+	private static void getCategory(Connection conn, List<Category> list,int id){
 		ResultSet rs = null;
 		String sql = "select * from category where pid=" + id;
-		conn = DB.getConn();
 		try {
 			rs = DB.executeQuery(conn, sql);
 			while(rs.next()){
@@ -56,18 +65,17 @@ public class CategoryDao {
 				c.setGrade(rs.getInt("grade"));
 				list.add(c);
 				if(!c.isLeaf()){
-					getCategory(list, c.getId());
+					getCategory(conn, list, c.getId());
 				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			DB.closeRs(rs);;
-			DB.closeConn(conn);;
+			DB.closeRs(rs);
 		}
-	}
-
+	}	
+	
 	public static void addChildCategory(int pid, String name, String descr) {
 		// TODO Auto-generated method stub
 		Connection conn = null;

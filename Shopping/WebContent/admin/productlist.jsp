@@ -53,7 +53,7 @@ if(pageNo >= pageCount) pageNo = pageCount;
 			<td><%=p.getNormalPrice() %></td>
 			<td><%=p.getMemberPrice() %></td>
 			<td><%=p.getPdate() %></td>
-	        <td><%=p.getCategoryId() %></td>
+	        <td><%=p.getCategory().getName() %></td>
 			<td>
 				<a href="productdelete.jsp?id=<%= p.getId()%>" target="detail">É¾³ý</a>
 				&nbsp;&nbsp;

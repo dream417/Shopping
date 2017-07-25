@@ -61,8 +61,11 @@ create table salesitim
 truncate table category 
 delete from product where categoryid = 21 
 
+select * from category;
+
 #select pid, sum(pcount) sumCount fromo salesitem group by pid order by desc limit 0£¬10
 
 
 select * from product where 1=1  and categoryid in (20) and (name like '%±Ê%' or descr like '%±Ê%') and normalprice > 1.0 and normalprice < 5.0 and memberprice > 0.9 and memberprice < 3.0 and pdate >= '2017-07-23 09:04:21' and pdate <= '2017-07-23 09:42:21' limit 0,13
 
+update category set isleaf=0 where id = 20; 

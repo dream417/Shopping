@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.bjsxt.shopping.Category;
 import com.bjsxt.shopping.Product;
 import com.bjsxt.shopping.util.DB;
 
@@ -244,7 +245,10 @@ public class ProductMysqlDao implements ProductDao{
 			rsCount.next();
 			pageCount = (rsCount.getInt(1)+pageSize-1)/pageSize;
 			
-			String sql = "select * from product limit " + (pageNo-1)*pageSize + "," + pageSize;
+			String sql = "select product.id, product.name, product.descr, product.normalprice, product.memberprice, product.pdate, product.categoryid, "
+					+ " category.id cid, category.name cname, category.descr cdescr,category.pid, category.isleaf, category.grade"
+					+ " from product join category on(product.categoryid = category.id) limit " + (pageNo-1)*pageSize + "," + pageSize;
+			
 			rs = DB.executeQuery(conn, sql);
 			while(rs.next()){
 				Product p = new Product();
@@ -256,6 +260,16 @@ public class ProductMysqlDao implements ProductDao{
 				p.setMemberPrice(rs.getDouble("memberprice"));
 				p.setPdate(rs.getTimestamp("pdate"));
 				p.setCategoryId(rs.getInt("categoryid"));
+				
+				Category c = new Category();
+				c.setId(rs.getInt("cid"));
+				c.setPid(rs.getInt("pid"));
+				c.setName(rs.getString("cname"));
+				c.setDescr(rs.getString("cdescr"));
+				c.setLeaf(rs.getInt("isleaf")==0?true:false);
+				c.setGrade(rs.getInt("grade"));
+
+				p.setCategory(c);
 				
 				products.add(p);
 			}
