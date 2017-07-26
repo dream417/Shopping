@@ -64,5 +64,16 @@ public class ProductOracleDao implements ProductDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public Product loadById(int id){
+		Product p = null;
+		
+		return p;
+	}
+	
+	public List<Product> getLatestProducts(int count){
+		List<Product> list = null;
+		return list;
+	}
 
 }

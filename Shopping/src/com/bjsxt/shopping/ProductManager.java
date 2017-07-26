@@ -80,10 +80,18 @@ public class ProductManager {
 	}
 	
 	public boolean updateProduct(Product p){
-		return false;
+		return dao.updateProduct(p);
 	}
 	
 	public boolean addProducts(Product p){
 		return dao.addProduct(p);
 	}
-}
+	
+	public Product loadById(int id){
+		return dao.loadById(id);
+	}
+	
+	public List<Product> getLatestProducts(int count){
+		return dao.getLatestProducts(count);
+	}
+ }

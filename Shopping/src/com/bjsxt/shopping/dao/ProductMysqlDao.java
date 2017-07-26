@@ -199,7 +199,33 @@ public class ProductMysqlDao implements ProductDao{
 	}
 	
 	public boolean updateProduct(Product p){
-		return false;
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DB.getConn();
+			String sql = "update product set name=?,descr=?,normalprice=?,memberprice=?,categoryid=? where id=?";
+			System.out.println(sql);
+			pstmt = DB.getPStmt(conn, sql);
+			
+			pstmt.setString(1,p.getName());
+			pstmt.setString(2, p.getDescr());
+			pstmt.setDouble(3, p.getNormalPrice());
+			pstmt.setDouble(4, p.getMemberPrice());
+			pstmt.setInt(5, p.getCategoryId());
+			pstmt.setInt(6, p.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}finally{
+			DB.closePStmt(pstmt);
+			DB.closeConn(conn);
+		}
+	
+		return true;
 	}
 
 	@Override
@@ -283,6 +309,84 @@ public class ProductMysqlDao implements ProductDao{
 			DB.closeConn(conn);
 		}
 		return pageCount;
+	}
+	
+	public Product loadById(int id){
+		Product p = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		List<Product> list = new ArrayList<Product>();
+		
+		try {
+			conn = DB.getConn();
+			String sql = "select product.id, product.name, product.descr, product.normalprice, product.memberprice, product.pdate, product.categoryid, "
+					+ " category.id cid, category.name cname, category.descr cdescr,category.pid, category.isleaf, category.grade"
+					+ " from product join category on(product.categoryid = category.id) where product.id=" + id;
+			
+			rs = DB.executeQuery(conn, sql);
+			if(rs.next()){
+				p = new Product();
+				
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setDescr(rs.getString("descr"));
+				p.setNormalPrice(rs.getDouble("normalprice"));
+				p.setMemberPrice(rs.getDouble("memberprice"));
+				p.setPdate(rs.getTimestamp("pdate"));
+				p.setCategoryId(rs.getInt("categoryid"));
+				
+				Category c = new Category();
+				c.setId(rs.getInt("cid"));
+				c.setPid(rs.getInt("pid"));
+				c.setName(rs.getString("cname"));
+				c.setDescr(rs.getString("cdescr"));
+				c.setLeaf(rs.getInt("isleaf")==0?true:false);
+				c.setGrade(rs.getInt("grade"));
+
+				p.setCategory(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}finally{
+			DB.closeRs(rs);
+			DB.closeConn(conn);
+		}
+		return p;
+	}
+	
+	public List<Product> getLatestProducts(int count){
+		Connection conn = null;
+		ResultSet rs = null;
+		List<Product> list = new ArrayList<Product>();
+		
+		try {
+			conn = DB.getConn();
+			String sql = "select * from product order by pdate desc limit 0," + count;
+			rs = DB.executeQuery(conn, sql);
+			while(rs.next()){
+				Product p = new Product();
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setDescr(rs.getString("descr"));
+				p.setNormalPrice(rs.getDouble("normalprice"));
+				p.setMemberPrice(rs.getDouble("memberprice"));
+				p.setPdate(rs.getTimestamp("pdate"));
+				p.setCategoryId(rs.getInt("categoryid"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeRs(rs);
+			DB.closeConn(conn);
+		}
+		
+		return list;
 	}
 	
 }

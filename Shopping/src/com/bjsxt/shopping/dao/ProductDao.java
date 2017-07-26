@@ -27,7 +27,12 @@ public interface ProductDao {
 	public boolean deleteProductsById(int[] idArray);
 	
 	public boolean updateProduct(Product p);
+	
 	public boolean addProduct(Product p);
 
 	public int getProducts(List<Product> list, int pageNo, int pageSize);
+
+	public Product loadById(int id);
+
+	public List<Product> getLatestProducts(int count);
 }
